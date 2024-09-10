@@ -6,7 +6,7 @@ import petCard from "../public/PetSettingsImage.png";
 
 const PetSettingsSection = () => {
   return (
-	  <section className="relative w-full h-auto px-5 py-4 text-white z-10">
+	  <section className="relative w-full h-auto px-5 py-4 pt-[88px] text-white z-10">
 		  <div className="flex flex-col justify-center">
 		  <Tabs disabledKeys={["identity", "skills"]} aria-label="Options" classNames={{tabList: "w-[315px] h-10 p-0 bg-black/60", tab:"data-[disabled=true]:text-[#949494] data-[disabled=true]:opacity-100", tabContent: "text-[10px] font-semibold group-data-[selected=false]:text-[#949494] w-full", cursor: "dark:bg-transparent shadow-none"}} className="self-center">
 			  <Tab key="profile" title="Профиль">

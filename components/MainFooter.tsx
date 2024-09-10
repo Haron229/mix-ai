@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@nextui-org/input";
 import {
   Button,
   ButtonGroup,
@@ -16,32 +15,19 @@ import {
 import { ChevronUpIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
-import attachment from "@/public/file.png";
-import send from "@/public/send.png";
 import mid from "@/public/mid_btn.png";
 import burger from "@/public/burger.png";
 import house from "@/public/house.png";
 import soon from "../public/soon.png";
+import InputBar from "./InputBar";
 
 const MainFooter = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <section className="fixed bottom-0 w-full p-5 bg-background">
+    <section className="fixed bottom-0 w-full p-5 bg-background z-10">
       <div className="flex flex-col gap-5">
-        <div>
-          <Input
-            size="lg"
-            radius="full"
-            placeholder="Введите запрос AI-питомцу..."
-            startContent={<Image alt="" src={attachment} />}
-            endContent={<Image alt="" src={send} />}
-            classNames={{
-              inputWrapper:
-                "outline outline-1 outline-secondary bg-background group-data-[focus=true]:bg-background",
-            }}
-          />
-        </div>
+        <InputBar />
         <div className="flex justify-center items-center">
           <div className="absolute w-[220px] h-16 mr-1 mb-1 bg-black rounded-full" />
           <div className="absolute w-[220px] h-16 ml-1 mt-1 bg-[#BABABA]/25 rounded-full" />
@@ -69,7 +55,6 @@ const MainFooter = () => {
 
       <Modal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
         backdrop="blur"
         classNames={{
           closeButton: "hidden",
@@ -78,9 +63,10 @@ const MainFooter = () => {
           body: "py-0 gap-5",
           footer: "py-8",
         }}
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader>
                 <ChevronUpIcon className="scale-[2]" />

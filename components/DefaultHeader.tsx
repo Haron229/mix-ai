@@ -8,7 +8,7 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 const DefaultHeader = ({ lable }: { lable: string }) => {
   return (
-    <section className="h-[72px] sticky z-10 bg-foreground text-[#949494] drop-shadow-sm flex justify-between p-6">
+    <section className="h-[72px] w-full fixed z-20 bg-foreground text-[#949494] drop-shadow-sm flex justify-between p-6">
       <div className="flex justify-center items-center gap-6">
         <Link href="/">
           <Button isIconOnly radius="full" size="sm" className="bg-[#232323]">

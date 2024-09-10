@@ -13,7 +13,7 @@ import Link from "next/link";
 
 const MainPetSection = () => {
   return (
-    <section className="relative w-full h-auto px-5 py-2 text-white z-10">
+    <section className="relative w-full h-[900px] px-5 py-2 pt-20 text-white z-10">
       {/* MIX tokens message */}
       <div className="h-20 rounded-[16px] bg-black/30 flex justify-between items-center px-5">
         <p className="w-2/3">Скоро будет возможность зарабатывать токены MIX</p>

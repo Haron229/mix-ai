@@ -15,7 +15,7 @@ interface ProfileProps {
 
 const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
   return (
-    <section className="relative w-full h-auto px-8 py-5 text-[#C0C0C0] z-10">
+    <section className="relative w-full h-auto px-8 py-5 pt-24 text-[#C0C0C0] z-10">
       <div className="flex flex-row items-center gap-3 pb-5">
         <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
           <Avatar showFallback src="https://images.unsplash.com/broken" />
