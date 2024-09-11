@@ -36,7 +36,7 @@ export const ChatCompletionResponseSchema = z.object({
       message: z.object({
         role: z.string(),
         content: z.string().nullable(),
-        refusal: z.string().optional(),
+        refusal: z.string().optional().nullable(),
         //tool_calls
       }),
       logprobs: z.null(),
