@@ -21,6 +21,8 @@ export const POST = async (req: NextRequest) => {
       //max_tokens
     });
 
+    console.log(JSON.stringify(completion.choices[0]));
+
     const result = ChatCompletionResponseSchema.safeParse(completion);
 
     return result.success
@@ -31,7 +33,7 @@ export const POST = async (req: NextRequest) => {
           "Something went wrong while validating response. Error: " +
             result.error.format(),
           {
-            status: 500,
+            status: 418,
           }
         );
   } catch (error) {
