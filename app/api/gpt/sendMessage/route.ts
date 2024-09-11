@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
     const result = ChatCompletionResponseSchema.safeParse(completion);
 
     return result.success
-      ? new NextResponse(JSON.stringify(result.data.choices[0]), {
+      ? new NextResponse(JSON.stringify(result.data), {
           status: 200,
         })
       : new NextResponse(
