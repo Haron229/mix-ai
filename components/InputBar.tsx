@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 import { Input } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
 import { addMessage, chatSlice, inputTextChange } from "@/lib/redux/chat.slice";
@@ -15,6 +16,7 @@ import {
 
 const InputBar = () => {
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
   const inputText = useSelector(chatSlice.selectors.selectInputText);
   const messages = useSelector(chatSlice.selectors.selectMessages);
   const dispatch = useDispatch();
@@ -52,10 +54,13 @@ const InputBar = () => {
           })
         );
     }
+
+    inputRef.current?.focus();
   };
 
   return (
     <Input
+      ref={inputRef}
       size="lg"
       radius="full"
       placeholder="Введите запрос AI-питомцу..."

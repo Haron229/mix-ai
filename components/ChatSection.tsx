@@ -1,6 +1,6 @@
 "use client";
 import { format } from "date-fns";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { chatSlice } from "@/lib/redux/chat.slice";
 
@@ -9,6 +9,7 @@ import Message from "./Message";
 import PetBanner from "./PetBanner";
 
 const ChatSection = () => {
+  const scrollViewRef = useRef<HTMLDivElement>(null);
   const messages = useSelector(chatSlice.selectors.selectMessages);
 
   const welcomeMessageTimestamp = useMemo(
@@ -17,7 +18,12 @@ const ChatSection = () => {
   );
 
   useEffect(() => {
-    console.log(messages);
+    setTimeout(() => {
+      scrollViewRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
+    });
   }, [messages]);
 
   return (
@@ -29,7 +35,7 @@ const ChatSection = () => {
           author="assistant"
           timestamp={welcomeMessageTimestamp}
         />
-        {messages.toReversed().map((message, index) => (
+        {messages.map((message, index) => (
           <Message
             key={index}
             content={message.content}
@@ -37,6 +43,7 @@ const ChatSection = () => {
             timestamp={format(message.timestamp, "h:mm aaa")}
           />
         ))}
+        <div ref={scrollViewRef} />
       </ScrollShadow>
     </section>
   );
