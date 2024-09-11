@@ -16,7 +16,9 @@ const ChatSection = () => {
     []
   );
 
-  useEffect(() => {}, [messages]);
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   return (
     <section className="pt-[72px]">
