@@ -1,12 +1,12 @@
 "use client";
 import { format } from "date-fns";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { chatSlice } from "@/lib/redux/chat.slice";
 
 import { ScrollShadow } from "@nextui-org/react";
 import Message from "./Message";
 import PetBanner from "./PetBanner";
-import { useSelector } from "react-redux";
-import { chatSlice } from "@/lib/redux/chat.slice";
 
 const ChatSection = () => {
   const messages = useSelector(chatSlice.selectors.selectMessages);
@@ -15,6 +15,8 @@ const ChatSection = () => {
     () => format(Date.now(), "h:mm aaa"),
     []
   );
+
+  useEffect(() => {}, [messages]);
 
   return (
     <section className="pt-[72px]">
@@ -25,7 +27,7 @@ const ChatSection = () => {
           author="assistant"
           timestamp={welcomeMessageTimestamp}
         />
-        {messages.map((message, index) => (
+        {messages.toReversed().map((message, index) => (
           <Message
             key={index}
             content={message.content}
