@@ -22,6 +22,7 @@ export interface PetMemoryRecord {
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  timestamp: number;
 }
 
 export interface OpenAIChatCompletionsProps {
@@ -55,7 +56,6 @@ export const ChatCompletionResponseSchema = z.object({
   }),
 });
 
-const choicesSchema = ChatCompletionResponseSchema.pick({ choices: true }).shape
-  .choices.element;
-
-export type ChatCompletionResponse = z.infer<typeof choicesSchema>;
+export type ChatCompletionResponse = z.infer<
+  typeof ChatCompletionResponseSchema
+>;

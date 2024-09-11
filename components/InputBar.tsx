@@ -20,10 +20,10 @@ const InputBar = () => {
   const dispatch = useDispatch();
 
   const handleSendMessageBtnClick = async () => {
-    dispatch(addMessage({ role: "user", content: inputText }));
+    dispatch(
+      addMessage({ role: "user", content: inputText, timestamp: Date.now() })
+    );
     dispatch(inputTextChange(""));
-
-    console.log(messages);
 
     const res = await fetch("/api/gpt/sendMessage", {
       method: "POST",
@@ -33,17 +33,22 @@ const InputBar = () => {
     });
 
     if (!res.ok)
-      dispatch(addMessage({ role: "assistant", content: "Что-то не так..." }));
+      dispatch(
+        addMessage({
+          role: "assistant",
+          content: "Что-то не так...",
+          timestamp: Date.now(),
+        })
+      );
     else {
       const response: ChatCompletionResponse = await res.json();
 
-      console.log(response);
-
-      if (response.message.content)
+      if (response.choices[0].message.content)
         dispatch(
           addMessage({
             role: "assistant",
-            content: response.message.content,
+            content: response.choices[0].message.content,
+            timestamp: response.created,
           })
         );
     }
@@ -64,9 +69,7 @@ const InputBar = () => {
       }}
       value={inputText}
       onChange={(e) => dispatch(inputTextChange(e.target.value))}
-      onFocus={() => {
-		
-	  }}
+      onFocus={() => {}}
       onClick={() => {
         if (!window.location.href.includes("chat")) router.push("/chat"); // TODO: change this logic
       }}
