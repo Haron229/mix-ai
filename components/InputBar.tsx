@@ -23,6 +23,8 @@ const InputBar = () => {
     dispatch(addMessage({ role: "user", content: inputText }));
     dispatch(inputTextChange(""));
 
+    console.log(messages);
+
     const res = await fetch("/api/gpt/sendMessage", {
       method: "POST",
       body: JSON.stringify({
@@ -62,6 +64,9 @@ const InputBar = () => {
       }}
       value={inputText}
       onChange={(e) => dispatch(inputTextChange(e.target.value))}
+      onFocus={() => {
+		
+	  }}
       onClick={() => {
         if (!window.location.href.includes("chat")) router.push("/chat"); // TODO: change this logic
       }}
