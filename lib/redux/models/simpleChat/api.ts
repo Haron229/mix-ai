@@ -6,7 +6,7 @@ export const simpleChatApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     sendMessage: builder.query<ChatCompletionResponse, ChatMessage>({
       query: (message: ChatMessage) => ({
-        url: "/gpt/sendMessage",
+        url: "/api/gpt/sendMessage",
         method: "POST",
         body: message,
       }),
