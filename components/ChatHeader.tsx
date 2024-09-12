@@ -1,7 +1,7 @@
 "use client";
 import { Button, Divider, Input, Avatar } from "@nextui-org/react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Sheet,
   SheetContent,
@@ -9,6 +9,9 @@ import {
   SheetFooter,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { userSlice } from "@/lib/redux/models/user/user.slice";
 
 import notificationIcon from "@/public/notification.png";
 import burger from "@/public/allchatsbtn.svg";
@@ -20,6 +23,9 @@ import {
 } from "@radix-ui/react-icons";
 
 const ChatHeader = () => {
+  const user = useAppSelector(userSlice.selectors.selectCurrentUser);
+  const dispatch = useAppDispatch();
+
   return (
     <section className="fixed top-0 w-full h-[72px] z-20 bg-foreground text-[#949494] drop-shadow-sm flex justify-between p-6">
       <div className="flex justify-center items-center gap-6">
@@ -44,7 +50,7 @@ const ChatHeader = () => {
                   alt=""
                   src={newchat}
                   className="mt-1"
-                  onClick={() => {}}
+                  onClick={() => {}} //create new chat with assistent
                 />
               </Button>
             </SheetHeader>
@@ -61,15 +67,20 @@ const ChatHeader = () => {
                 <Divider />
               </section>
             </div>
-            <SheetFooter className="w-full h-[98px] p-6 bg-[#0D0D0D]">
-              <div className="flex justify-start items-center gap-3">
-                <Avatar
-                  showFallback
-                  src="https://images.unsplash.com/broken"
-                  className="w-12 h-12"
-                />
-                <p className="text-[17px] font-semibold">Maydan Naymanov</p>
-              </div>
+            <SheetFooter
+              className="w-full h-[98px] p-6 bg-[#0D0D0D]"
+              // onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+            >
+              <Link href="/profile">
+                <div className="flex justify-start items-center gap-3">
+                  <Avatar
+                    showFallback
+                    src={user?.photo_url ?? "https://images.unsplash.com/broken"}
+                    className="w-12 h-12"
+                  />
+                  <p className="text-[17px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>
+                </div>
+              </Link>
               <Button isIconOnly radius="full" className="bg-transparent">
                 <DotsHorizontalIcon className="scale-150 text-[#878787]" />
               </Button>
@@ -80,11 +91,15 @@ const ChatHeader = () => {
       </div>
       <div className="flex justify-center items-center gap-3">
         <Image alt="notification icon" src={notificationIcon} />
-        <Link href="/">
-          <Button isIconOnly radius="full" size="md" className="bg-[#232323]">
-            <Cross1Icon />
-          </Button>
-        </Link>
+        <Button
+          isIconOnly
+          radius="full"
+          size="md"
+          className="bg-[#232323]"
+          onClick={() => dispatch(setCurrentSection(Sections.Main))}
+        >
+          <Cross1Icon />
+        </Button>
       </div>
     </section>
   );

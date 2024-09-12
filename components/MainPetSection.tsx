@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Progress } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { useAppDispatch } from "@/lib/redux/shared/store";
 
 import mix from "@/public/mix.png";
 import pet from "@/public/pet.png";
@@ -10,8 +11,11 @@ import pencil from "@/public/pencil.png";
 import earn from "@/public/Vector.png";
 import soon from "@/public/soon.png";
 import Link from "next/link";
+import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 
 const MainPetSection = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <section className="relative w-full h-[900px] px-5 py-2 pt-20 text-white z-10">
       {/* MIX tokens message */}
@@ -47,9 +51,8 @@ const MainPetSection = () => {
         <p>Лютик</p>
         <Image alt="" src={pet} />
         <Button
-          as={Link}
-          href="/petSettings"
           className="block w-[120px] h-[38px] px-0 rounded-full outline outline-1 outline-secondary bg-background self-end"
+          onClick={() => dispatch(setCurrentSection(Sections.Settings))}
         >
           <div className="flex items-center h-full">
             <Image
@@ -68,18 +71,19 @@ const MainPetSection = () => {
 
       {/* Controls group */}
       <div className="grid grid-cols-2 gap-3">
-        <Link href={"/petMemory"}>
-          <Button className="flex justify-between items-center text-start bg-black/70 rounded-[16px] pr-3 pl-5 py-4 h-[68px] w-full">
-            <p>
-              Память
-              <br />
-              AI-питомца
-            </p>
-            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-              <Image alt="" src={pencil} />
-            </div>
-          </Button>
-        </Link>
+        <Button
+          className="flex justify-between items-center text-start bg-black/70 rounded-[16px] pr-3 pl-5 py-4 h-[68px] w-full"
+          onClick={() => dispatch(setCurrentSection(Sections.Memory))}
+        >
+          <p>
+            Память
+            <br />
+            AI-питомца
+          </p>
+          <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+            <Image alt="" src={pencil} />
+          </div>
+        </Button>
         <div className="flex justify-between items-center bg-black/70 rounded-[16px] max-h-[68px]">
           <p className="flex items-center px-5">To Earn</p>
           <div className="flex flex-col items-end">

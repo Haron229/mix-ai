@@ -1,11 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { Input } from "@nextui-org/react";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import {
   chatSlice,
   inputTextChange,
+  setIsOpen,
 } from "@/lib/redux/models/simpleChat/chat.slice";
 import { simpleChatApi } from "@/lib/redux/models/simpleChat/api";
 
@@ -15,7 +15,6 @@ import attachment from "@/public/file.png";
 import send from "@/public/send.png";
 
 const InputBar = () => {
-  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const inputText = useAppSelector(chatSlice.selectors.selectInputText);
@@ -44,9 +43,8 @@ const InputBar = () => {
       }}
       value={inputText}
       onChange={(e) => dispatch(inputTextChange(e.target.value))}
-      onFocus={() => {}}
-      onClick={() => {
-        if (!window.location.href.includes("chat")) router.push("/chat"); // TODO: change this logic
+      onFocus={() => {
+        dispatch(setIsOpen(true));
       }}
     />
   );

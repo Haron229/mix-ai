@@ -4,10 +4,14 @@ import { contextMenuSlice } from "../models/conextMenu/contextMenu.slice";
 import { chatSlice } from "../models/simpleChat/chat.slice";
 import { baseApi } from "./api";
 import { useDispatch, useSelector, useStore } from "react-redux";
+import { appSlice } from "../models/app/app.slice";
+import { userSlice } from "../models/user/user.slice";
 
 export const store = () =>
   configureStore({
     reducer: {
+      [appSlice.name]: appSlice.reducer,
+      [userSlice.name]: userSlice.reducer,
       [memoryRecordSlice.name]: memoryRecordSlice.reducer,
       [contextMenuSlice.name]: contextMenuSlice.reducer,
       [chatSlice.name]: chatSlice.reducer,

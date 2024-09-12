@@ -25,8 +25,8 @@ export const chatSlice = createSlice({
     selectIsMessageLoading: (state) => state.isMessageLoading,
   },
   reducers: {
-    isOpenChange: (state) => {
-      state.isOpen = !state.isOpen;
+    setIsOpen: (state, action: PayloadAction<boolean>) => {
+      state.isOpen = action.payload;
     },
     inputTextChange: (state, action: PayloadAction<string>) => {
       state.inputText = action.payload;
@@ -40,6 +40,11 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { isOpenChange, inputTextChange, addMessage, setIsMessageLoading } = chatSlice.actions;
+export const {
+  setIsOpen,
+  inputTextChange,
+  addMessage,
+  setIsMessageLoading,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

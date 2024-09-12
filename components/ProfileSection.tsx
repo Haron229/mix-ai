@@ -1,6 +1,8 @@
 "use client";
 import { Avatar, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import Image from "next/image";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import { userSlice } from "@/lib/redux/models/user/user.slice";
 
 import verification from "@/public/verificationIcon.svg";
 import profile from "@/public/profileIcon.svg";
@@ -9,19 +11,22 @@ import phone from "@/public/phoneIcon.svg";
 import subscription from "@/public/subscriptionIcon.svg";
 import language from "@/public/languageIcon.svg";
 
-interface ProfileProps {
-  name: string;
-}
+const ProfileSection = () => {
+  const user = useAppSelector(userSlice.selectors.selectCurrentUser);
 
-const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
   return (
     <section className="relative w-full h-auto px-8 py-5 pt-24 text-[#C0C0C0] z-10">
       <div className="flex flex-row items-center gap-3 pb-5">
         <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
-          <Avatar showFallback src="https://images.unsplash.com/broken" />
+          <Avatar
+            showFallback
+            src={user?.photo_url ?? "https://images.unsplash.com/broken"}
+          />
         </div>
-        <p className="text-[18px] font-semibold">{name}</p>
-        <Image alt="" src={verification} width={23} height={23} />
+        <p className="text-[18px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>
+        {user?.is_premium && (
+          <Image alt="" src={verification} width={23} height={23} />
+        )}
       </div>
       <div className="flex flex-col gap-5">
         <Card
@@ -43,12 +48,12 @@ const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
                     <p>Имя пользователя</p>
                   </div>
                   <p className="text-[12px] text-[#949494] font-medium">
-                    @maydan
+                    {`@${user?.username}`}
                   </p>
                 </div>
                 <Divider className="bg-[#2F2F2F]" />
               </div>
-              <div className="flex flex-col gap-4 w-full">
+              {/* <div className="flex flex-col gap-4 w-full">
                 <div className="flex justify-between">
                   <div className="flex gap-3 items-center">
                     <Image alt="" src={email} />
@@ -59,8 +64,8 @@ const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
                   </p>
                 </div>
                 <Divider className="bg-[#2F2F2F]" />
-              </div>
-              <div className="flex flex-col gap-4 w-full">
+              </div> */}
+              {/* <div className="flex flex-col gap-4 w-full">
                 <div className="flex justify-between">
                   <div className="flex gap-3">
                     <Image alt="" src={phone} />
@@ -71,7 +76,7 @@ const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
                   </p>
                 </div>
                 <Divider className="bg-[#2F2F2F]" />
-              </div>
+              </div> */}
               <div className="flex flex-col gap-4 w-full">
                 <div className="flex justify-between">
                   <div className="flex gap-3">
@@ -105,7 +110,7 @@ const ProfileSection: React.FC<ProfileProps> = ({ name }) => {
                     <p>Язык</p>
                   </div>
                   <p className="text-[12px] text-[#949494] font-medium">
-                    Русский
+                    {user?.language_code === "en" ? "English" : "Русский"}
                   </p>
                 </div>
               </div>
