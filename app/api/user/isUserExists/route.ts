@@ -13,7 +13,7 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (!res)
-      await fetch("/api/user/add", {
+      fetch("/api/user/add", {
         method: "POST",
         body: JSON.stringify(data),
       }).then((result) =>
@@ -22,7 +22,7 @@ export const GET = async (req: NextRequest) => {
           : new NextResponse(result.body, { status: result.status })
       );
 
-    return new NextResponse("User exist!", { status: 200 });
+    return new NextResponse(null, { status: 200 });
   } catch (error) {
     return new NextResponse("Something went wrong while checking for user...", {
       status: 500,

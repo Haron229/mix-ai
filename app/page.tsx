@@ -11,9 +11,13 @@ import Image from "next/image";
 
 import bg_gradient from "@/public/bg.png";
 import bg from "@/public/main_bg.png";
+import { useAppDispatch } from "@/lib/redux/shared/store";
+import { setCurrentUser } from "@/lib/redux/models/user/user.slice";
 
 export default function Home() {
   const [webApp, setWebApp] = useState<typeof WebApp | null>(null);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,7 +44,9 @@ export default function Home() {
         body: JSON.stringify(userData),
       });
 
-      if (!res) console.log("Something wrong with user"); // need to redirect to special rout
+      if (!res)
+        console.log("Something wrong with user"); // need to redirect to special rout
+      else dispatch(setCurrentUser(initData.user as ITelegramUser)); // should move this logic to api slice too
     };
 
     if (initData?.user) {

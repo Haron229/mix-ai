@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   contentChange,
   memoryRecordSlice,
-} from "@/lib/redux/memoryRecord.slice";
+} from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
 import MemoryRecordTitle from "./MemoryRecordTitle";
 import { Textarea } from "@nextui-org/react";
-import { contextMenuSlice } from "@/lib/redux/contextMenu.slice";
+import { contextMenuSlice } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 
 const MemoryRecordSection = () => {
   const isOpen = useSelector(contextMenuSlice.selectors.selectIsOpen);

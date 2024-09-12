@@ -2,7 +2,7 @@
 import { Button, Input } from "@nextui-org/react";
 import MemoryRecordContextMenu from "./MemoryRecordContextMenu";
 import { useDispatch } from "react-redux";
-import { isPinnedChange } from "@/lib/redux/memoryRecord.slice";
+import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
 import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 

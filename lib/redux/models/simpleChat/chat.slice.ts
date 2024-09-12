@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ChatMessage } from "../types";
+import { ChatMessage } from "@/lib/types";
 
 export interface ChatState {
   isOpen: boolean;
   inputText: string;
   messages: ChatMessage[];
+  isMessageLoading: boolean;
 }
 
 const initialState: ChatState = {
   isOpen: false,
   inputText: "",
   messages: [],
+  isMessageLoading: false,
 };
 
 export const chatSlice = createSlice({
@@ -20,6 +22,7 @@ export const chatSlice = createSlice({
     selectIsOpen: (state) => state.isOpen,
     selectInputText: (state) => state.inputText,
     selectMessages: (state) => state.messages,
+    selectIsMessageLoading: (state) => state.isMessageLoading,
   },
   reducers: {
     isOpenChange: (state) => {
@@ -31,9 +34,12 @@ export const chatSlice = createSlice({
     addMessage: (state, action: PayloadAction<ChatMessage>) => {
       state.messages.push(action.payload);
     },
+    setIsMessageLoading: (state, action: PayloadAction<boolean>) => {
+      state.isMessageLoading = action.payload;
+    },
   },
 });
 
-export const { isOpenChange, inputTextChange, addMessage } = chatSlice.actions;
+export const { isOpenChange, inputTextChange, addMessage, setIsMessageLoading } = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ThemeProviderProps } from "next-themes/dist/types";
 import { Provider } from "react-redux";
-import { store } from "@/lib/redux/store";
+import { AppStore, store } from "@/lib/redux/shared/store";
+import { useRef } from "react";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -13,10 +14,15 @@ export interface ProvidersProps {
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
+  const storeRef = useRef<AppStore>();
+
+  if (!storeRef.current) {
+    storeRef.current = store();
+  }
 
   return (
     <NextUIProvider navigate={router.push}>
-      <Provider store={store}>
+      <Provider store={storeRef.current}>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
       </Provider>
     </NextUIProvider>

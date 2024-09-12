@@ -30,7 +30,6 @@ yarn-error.log*
 
 #db
 /pgdata
-docker-compose.yml
 
 # vercel
 .vercel

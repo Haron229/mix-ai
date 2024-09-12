@@ -13,13 +13,13 @@ import {
   DrawingPinIcon,
 } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "@/lib/redux/store";
+import { AppState } from "@/lib/redux/shared/store";
 
 import Image from "next/image";
 
 import color from "@/public/colorIcon.svg";
 import _delete from "@/public/deleteIcon.svg";
-import { isOpenChange } from "@/lib/redux/contextMenu.slice";
+import { isOpenChange } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 
 const MemoryRecordContextMenu = () => {
   const isOpen = useSelector((state: AppState) => state.contextMenu.isOpen);

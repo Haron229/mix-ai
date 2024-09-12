@@ -1,16 +1,16 @@
 "use client";
 import { format } from "date-fns";
 import { useEffect, useMemo, useRef } from "react";
-import { useSelector } from "react-redux";
-import { chatSlice } from "@/lib/redux/chat.slice";
+import { chatSlice } from "@/lib/redux/models/simpleChat/chat.slice";
 
 import { ScrollShadow } from "@nextui-org/react";
 import Message from "./Message";
 import PetBanner from "./PetBanner";
+import { useAppSelector } from "@/lib/redux/shared/store";
 
 const ChatSection = () => {
   const scrollViewRef = useRef<HTMLDivElement>(null);
-  const messages = useSelector(chatSlice.selectors.selectMessages);
+  const messages = useAppSelector(chatSlice.selectors.selectMessages);
 
   const welcomeMessageTimestamp = useMemo(
     () => format(Date.now(), "h:mm aaa"),

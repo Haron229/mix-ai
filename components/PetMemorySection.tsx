@@ -22,8 +22,8 @@ import upload from "@/public/uploadIcon.svg";
 
 import MemoryRecordContextMenu from "./MemoryRecordContextMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "@/lib/redux/store";
-import { isPinnedChange } from "@/lib/redux/memoryRecord.slice";
+import { AppState } from "@/lib/redux/shared/store";
+import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
 const PetMemorySection = () => {
   const router = useRouter();

@@ -2,59 +2,29 @@
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { Input } from "@nextui-org/react";
-import { useDispatch, useSelector } from "react-redux";
-import { addMessage, chatSlice, inputTextChange } from "@/lib/redux/chat.slice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import {
+  chatSlice,
+  inputTextChange,
+} from "@/lib/redux/models/simpleChat/chat.slice";
+import { simpleChatApi } from "@/lib/redux/models/simpleChat/api";
 
 import Image from "next/image";
 
 import attachment from "@/public/file.png";
 import send from "@/public/send.png";
-import {
-  ChatCompletionResponse,
-  OpenAIChatCompletionsProps,
-} from "@/lib/types";
 
 const InputBar = () => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const inputText = useSelector(chatSlice.selectors.selectInputText);
-  const messages = useSelector(chatSlice.selectors.selectMessages);
-  const dispatch = useDispatch();
+
+  const inputText = useAppSelector(chatSlice.selectors.selectInputText);
+  const dispatch = useAppDispatch();
+
+  const [sendMessage] = simpleChatApi.useLazySendMessageQuery();
 
   const handleSendMessageBtnClick = async () => {
-    dispatch(
-      addMessage({ role: "user", content: inputText, timestamp: Date.now() })
-    );
-    dispatch(inputTextChange(""));
-
-    const res = await fetch("/api/gpt/sendMessage", {
-      method: "POST",
-      body: JSON.stringify({
-        messages,
-      } satisfies OpenAIChatCompletionsProps),
-    });
-
-    if (!res.ok)
-      dispatch(
-        addMessage({
-          role: "assistant",
-          content: "Что-то не так...",
-          timestamp: Date.now(),
-        })
-      );
-    else {
-      const response: ChatCompletionResponse = await res.json();
-
-      if (response.choices[0].message.content)
-        dispatch(
-          addMessage({
-            role: "assistant",
-            content: response.choices[0].message.content,
-            timestamp: response.created,
-          })
-        );
-    }
-
+    sendMessage({ role: "user", content: inputText, timestamp: Date.now() });
     inputRef.current?.focus();
   };
 
