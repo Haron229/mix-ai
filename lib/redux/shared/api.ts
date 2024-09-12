@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "https://themixreality.com/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.BASE_URL }),
   endpoints: () => ({}),
 });

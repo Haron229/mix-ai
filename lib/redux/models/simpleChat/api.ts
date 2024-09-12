@@ -8,7 +8,7 @@ export const simpleChatApi = baseApi.injectEndpoints({
       query: (message: ChatMessage) => ({
         url: "/gpt/sendMessage",
         method: "POST",
-        body: message,
+        body: [message],
       }),
       async onQueryStarted(message, { dispatch, queryFulfilled }) {
         dispatch(addMessage(message));
