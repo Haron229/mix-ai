@@ -20,7 +20,7 @@ import emoji from "@/public/emoji.svg";
 import create from "@/public/createIcon.svg";
 import upload from "@/public/uploadIcon.svg";
 
-import MemoryRecordContextMenu from "../MemoryRecord/MemoryRecordContextMenu";
+import MemoryRecordContextMenu from "@/components/MemoryRecord/MemoryRecordContextMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/lib/redux/shared/store";
 import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";

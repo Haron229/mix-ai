@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
-import ChatHeader from "./ChatHeader";
-import ChatSection from "./ChatSection";
-import InputBar from "./InputBar";
+import ChatHeader from "@/components/Chat/ChatHeader";
+import ChatSection from "@/components/Chat/ChatSection";
+import InputBar from "@/components/Chat/InputBar";
 
 import { useAppSelector } from "@/lib/redux/shared/store";
 import { chatSlice } from "@/lib/redux/models/simpleChat/chat.slice";

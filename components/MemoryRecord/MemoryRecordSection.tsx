@@ -5,7 +5,7 @@ import {
   memoryRecordSlice,
 } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
-import MemoryRecordTitle from "./MemoryRecordTitle";
+import MemoryRecordTitle from "@/components/MemoryRecord/MemoryRecordTitle";
 import { Textarea } from "@nextui-org/react";
 import { contextMenuSlice } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 

@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef } from "react";
 import { chatSlice } from "@/lib/redux/models/simpleChat/chat.slice";
 
 import { ScrollShadow } from "@nextui-org/react";
-import Message from "./Message";
-import PetBanner from "./PetBanner";
+import Message from "@/components/Chat/Message";
+import PetBanner from "@/components/Chat/PetBanner";
 import { useAppSelector } from "@/lib/redux/shared/store";
 
 const ChatSection = () => {

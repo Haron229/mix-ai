@@ -18,8 +18,8 @@ import Image from "next/image";
 import mid from "@/public/mid_btn.png";
 import burger from "@/public/burger.png";
 import house from "@/public/house.png";
-import soon from "../public/soon.png";
-import InputBar from "../Chat/InputBar";
+import soon from "@/public/soon.png";
+import InputBar from "@/components/Chat/InputBar";
 
 const MainFooter = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

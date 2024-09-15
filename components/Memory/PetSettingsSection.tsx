@@ -1,8 +1,8 @@
 import { Tabs, Tab, Input, Textarea, Badge } from "@nextui-org/react";
 import Image from "next/image";
 
-import soon from "../public/soon.png";
-import petCard from "../public/PetSettingsImage.png";
+import soon from "@/public/soon.png";
+import petCard from "@/public/PetSettingsImage.png";
 
 const PetSettingsSection = () => {
   return (
