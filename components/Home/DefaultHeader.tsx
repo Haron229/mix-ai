@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
-
-import notificationIcon from "@/public/notification.png";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import {
   appSlice,
   Sections,
   setCurrentSection,
 } from "@/lib/redux/models/app/app.slice";
+
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
+import notificationIcon from "@/public/notification.svg";
 
 const DefaultHeader = ({ lable }: { lable: string }) => {
   const user = useAppSelector(userSlice.selectors.selectCurrentUser);
@@ -28,7 +28,7 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
           className="bg-[#232323]"
           onClick={() => dispatch(setCurrentSection(prevSection))}
         >
-          <ChevronLeftIcon />
+          <ChevronLeftIcon className="scale-150" />
         </Button>
         <p>{lable}</p>
       </div>
@@ -40,8 +40,8 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
         >
           <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
             <Avatar
-              showFallback
-              src={user?.photo_url ?? "https://images.unsplash.com/broken"}
+              src={user?.photo_url ?? "/profile.svg"}
+              classNames={{ img: "object-none", base: "w-[44px] h-[44px]" }}
             />
           </div>
         </Link>

@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
 
-import notificationIcon from "@/public/notification.png";
+import notificationIcon from "@/public/notification.svg";
 import burger from "@/public/allchatsbtn.svg";
 import newchat from "@/public/newchaticon.svg";
 import {
@@ -31,16 +31,18 @@ const ChatHeader = () => {
       <div className="flex justify-center items-center gap-6">
         <Sheet>
           <SheetTrigger className="w-8 h-8 bg-[#232323] rounded-full flex justify-center items-center">
-            <Image alt="" src={burger} />
+            <Image alt="" src={burger} className="scale-90" />
           </SheetTrigger>
           <SheetContent side={"left"} className="w-[354px]">
             <SheetHeader className="w-full h-[85px] p-6 bg-[#0D0D0D]">
               <Input
                 placeholder="Поиск"
-                startContent={<MagnifyingGlassIcon className="scale-150" />}
+                startContent={
+                  <MagnifyingGlassIcon className="scale-150 text-[#C0C0C0]" />
+                }
                 classNames={{
                   base: "h-8",
-                  input: "text-[15px] font-semibold",
+                  input: "text-[15px] font-semibold placeholder:text-[#C0C0C0]",
                   inputWrapper:
                     "min-h-8 h-8 rounded-[5px] bg-[#1C1C1C] text-[#C0C0C0]",
                 }}
@@ -74,9 +76,8 @@ const ChatHeader = () => {
               <Link href="/profile">
                 <div className="flex justify-start items-center gap-3">
                   <Avatar
-                    showFallback
-                    src={user?.photo_url ?? "https://images.unsplash.com/broken"}
-                    className="w-12 h-12"
+                    src={user?.photo_url ?? "/profile.svg"}
+                    classNames={{ img: "object-none", base: "w-12 h-12" }}
                   />
                   <p className="text-[17px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>
                 </div>

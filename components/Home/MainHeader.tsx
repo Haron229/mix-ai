@@ -5,8 +5,8 @@ import { Avatar } from "@nextui-org/react";
 import { useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
 
-import petIcon from "@/public/AI-pet-icon.png";
-import notificationIcon from "@/public/notification.png";
+import petIcon from "@/public/petIcon.svg";
+import notificationIcon from "@/public/notification.svg";
 
 const MainHeader = () => {
   const user = useAppSelector(userSlice.selectors.selectCurrentUser);
@@ -22,8 +22,8 @@ const MainHeader = () => {
         <Link href="/profile">
           <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
             <Avatar
-              showFallback
-              src={user?.photo_url ?? "https://images.unsplash.com/broken"}
+              src={user?.photo_url ?? "/profile.svg"}
+              classNames={{ img: "object-none", base: "w-[44px] h-[44px]" }}
             />
           </div>
         </Link>

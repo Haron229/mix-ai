@@ -3,11 +3,11 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch } from "@/lib/redux/shared/store";
-
-import notificationIcon from "@/public/notification.png";
-import cog from "@/public/cog.png";
-import { Cross1Icon } from "@radix-ui/react-icons";
 import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+
+import notificationIcon from "@/public/notification.svg";
+import cog from "@/public/cogIcon.svg";
+import { Cross1Icon } from "@radix-ui/react-icons";
 
 const ProfileHeader = () => {
   const dispatch = useAppDispatch();

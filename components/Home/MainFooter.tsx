@@ -19,13 +19,13 @@ import mid from "@/public/mid_btn.png";
 import burger from "@/public/burger.png";
 import house from "@/public/house.png";
 import soon from "../public/soon.png";
-import InputBar from "./InputBar";
+import InputBar from "../Chat/InputBar";
 
 const MainFooter = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
-    <section className="fixed bottom-0 w-full p-5 bg-background z-10">
+    <section className="fixed bottom-0 w-full p-5 pt-[1px] bg-background z-10">
       <div className="flex flex-col gap-5">
         <InputBar />
         <div className="flex justify-center items-center">

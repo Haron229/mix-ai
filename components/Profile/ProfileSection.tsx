@@ -1,13 +1,13 @@
 "use client";
 import { Avatar, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
 import Image from "next/image";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import { useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
 
 import verification from "@/public/verificationIcon.svg";
 import profile from "@/public/profileIcon.svg";
-import email from "@/public/emailIcon.svg";
-import phone from "@/public/phoneIcon.svg";
+// import email from "@/public/emailIcon.svg";
+// import phone from "@/public/phoneIcon.svg";
 import subscription from "@/public/subscriptionIcon.svg";
 import language from "@/public/languageIcon.svg";
 
@@ -19,8 +19,8 @@ const ProfileSection = () => {
       <div className="flex flex-row items-center gap-3 pb-5">
         <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
           <Avatar
-            showFallback
-            src={user?.photo_url ?? "https://images.unsplash.com/broken"}
+            src={user?.photo_url ?? "/profile.svg"}
+            classNames={{ img: "object-none", base: "w-[44px] h-[44px]" }}
           />
         </div>
         <p className="text-[18px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>

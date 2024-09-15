@@ -11,6 +11,9 @@ import { useAppSelector } from "@/lib/redux/shared/store";
 const ChatSection = () => {
   const scrollViewRef = useRef<HTMLDivElement>(null);
   const messages = useAppSelector(chatSlice.selectors.selectMessages);
+  const isInputFocused = useAppSelector(
+    chatSlice.selectors.selectIsInputFocused
+  );
 
   const welcomeMessageTimestamp = useMemo(
     () => format(Date.now(), "h:mm aaa"),
@@ -23,13 +26,16 @@ const ChatSection = () => {
         behavior: "smooth",
         block: "end",
       });
+      scroll({ top: 1000, behavior: "instant" });
     });
-  }, [messages]);
+  }, [messages, isInputFocused]);
 
   return (
-    <section className="pt-[72px]">
+    <section className="py-[72px]">
       <PetBanner />
-      <ScrollShadow className="flex flex-col h-[560px] px-8 mt-32">
+      <ScrollShadow
+        className={`flex flex-col px-8 mt-32 ${isInputFocused ? "h-52" : "h-auto"}`}
+      >
         <Message
           content="Дроу, чем могу помочь бро?"
           author="assistant"

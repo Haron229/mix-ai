@@ -20,7 +20,7 @@ import emoji from "@/public/emoji.svg";
 import create from "@/public/createIcon.svg";
 import upload from "@/public/uploadIcon.svg";
 
-import MemoryRecordContextMenu from "./MemoryRecordContextMenu";
+import MemoryRecordContextMenu from "../MemoryRecord/MemoryRecordContextMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "@/lib/redux/shared/store";
 import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
@@ -45,7 +45,7 @@ const PetMemorySection = () => {
         <Card
           classNames={{
             base: "bg-[#1C1C1C] text-[#C0C0C0] rounded-[10px] shadow-none outline-0",
-            header: "text-[16px] bg-[#060606] px-5 py-4 rounded-t-[10px]",
+            header: "text-[16px] bg-black px-5 py-4 rounded-t-[10px]",
             body: "py-4",
           }}
         >

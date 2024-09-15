@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChatMessage } from "@/lib/types";
 
 export interface ChatState {
-  isOpen: boolean;
+  isInputFocused: boolean;
   inputText: string;
   messages: ChatMessage[];
   isMessageLoading: boolean;
 }
 
 const initialState: ChatState = {
-  isOpen: false,
+  isInputFocused: false,
   inputText: "",
   messages: [],
   isMessageLoading: false,
@@ -19,14 +19,14 @@ export const chatSlice = createSlice({
   name: "chat",
   initialState,
   selectors: {
-    selectIsOpen: (state) => state.isOpen,
+    selectIsInputFocused: (state) => state.isInputFocused,
     selectInputText: (state) => state.inputText,
     selectMessages: (state) => state.messages,
     selectIsMessageLoading: (state) => state.isMessageLoading,
   },
   reducers: {
-    setIsOpen: (state, action: PayloadAction<boolean>) => {
-      state.isOpen = action.payload;
+    setIsInputFocused: (state, action: PayloadAction<boolean>) => {
+      state.isInputFocused = action.payload;
     },
     inputTextChange: (state, action: PayloadAction<string>) => {
       state.inputText = action.payload;
@@ -41,7 +41,7 @@ export const chatSlice = createSlice({
 });
 
 export const {
-  setIsOpen,
+  setIsInputFocused,
   inputTextChange,
   addMessage,
   setIsMessageLoading,

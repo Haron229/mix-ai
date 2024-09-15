@@ -1,23 +1,21 @@
 "use client";
 import Image from "next/image";
-import { Progress } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { useAppDispatch } from "@/lib/redux/shared/store";
+import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 
 import mix from "@/public/mix.png";
 import pet from "@/public/pet.png";
-import cog from "@/public/cog.png";
+import cog from "@/public/cogIcon.svg";
 import pencil from "@/public/pencil.png";
 import earn from "@/public/Vector.png";
 import soon from "@/public/soon.png";
-import Link from "next/link";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 
 const MainPetSection = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <section className="relative w-full h-[900px] px-5 py-2 pt-20 text-white z-10">
+    <section className="relative w-full px-5 py-2 pt-20 text-white z-10">
       {/* MIX tokens message */}
       <div className="h-20 rounded-[16px] bg-black/30 flex justify-between items-center px-5">
         <p className="w-2/3">Скоро будет возможность зарабатывать токены MIX</p>
@@ -28,7 +26,7 @@ const MainPetSection = () => {
       </div>
 
       {/* Level */}
-      <div className="my-4 px-2">
+      {/* <div className="my-4 px-2">
         <div className="flex justify-between items-center">
           <span>Прыщь</span>
           <span>- ур.</span>
@@ -44,7 +42,7 @@ const MainPetSection = () => {
           }}
           className="mt-2"
         />
-      </div>
+      </div> */}
 
       {/* Pet */}
       <div className="flex flex-col justify-center items-center gap-4 my-5">
@@ -80,7 +78,7 @@ const MainPetSection = () => {
             <br />
             AI-питомца
           </p>
-          <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+          <div className="w-[35px] h-[35px] rounded-full bg-secondary flex items-center justify-center">
             <Image alt="" src={pencil} />
           </div>
         </Button>
@@ -92,8 +90,8 @@ const MainPetSection = () => {
               <Image alt="" src={soon} />
             </div>
             <div className="px-3 pb-2">
-              <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                <Image alt="" src={earn} />
+              <div className="w-[30px] h-[30px] rounded-full bg-secondary flex items-center justify-center">
+                <Image alt="" src={earn} className="ml-[1px]" />
               </div>
             </div>
           </div>

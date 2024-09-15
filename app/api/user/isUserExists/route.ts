@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { ITelegramUser } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
     const data: ITelegramUser = await req.json();
 
