@@ -26,7 +26,7 @@ const ChatSection = () => {
         behavior: "smooth",
         block: "end",
       });
-      scroll({ top: 1000, behavior: "instant" });
+      scroll(0, 1000);
     });
   }, [messages, isInputFocused]);
 
