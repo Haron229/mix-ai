@@ -10,15 +10,6 @@ export interface ITelegramUser {
   photo_url?: string;
 }
 
-export interface PetMemoryRecord {
-  id?: string;
-  title: string;
-  emoji?: string;
-  content: string;
-  isPinned: boolean;
-  updatedAt?: Date; // ???
-}
-
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -58,4 +49,58 @@ export const ChatCompletionResponseSchema = z.object({
 
 export type ChatCompletionResponse = z.infer<
   typeof ChatCompletionResponseSchema
+>;
+
+export interface PetMemoryRecord {
+  id: string;
+  title: string;
+  emoji: string;
+  content: string;
+  color: string;
+  isPinned: boolean;
+  updatedAt?: number;
+}
+
+export const PetMemoryRecordSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  emoji: z.string(),
+  content: z.string(),
+  color: z.string(),
+  isPinned: z.boolean(),
+  updatedAt: z.number().optional(),
+});
+
+export interface SaveMemoryRecordProps {
+  id?: string;
+  userId: number;
+  title: string;
+  emoji?: string;
+  content: string;
+  color?: string;
+  isPinned: boolean;
+}
+
+export const GetAllMemoryRecordsResponseSchema = z.object({
+  records: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      emoji: z.string(),
+      color: z.string(),
+      isPinned: z.boolean(),
+      updatedAt: z.number(),
+    })
+  ),
+});
+
+export type GetAllMemoryRecordsResponse = z.infer<
+  typeof GetAllMemoryRecordsResponseSchema
+>;
+
+export const GetMemoryRecordResponseSchema =
+  GetAllMemoryRecordsResponseSchema.shape.records.element;
+
+export type GetMemoryRecordResponse = z.infer<
+  typeof GetMemoryRecordResponseSchema
 >;

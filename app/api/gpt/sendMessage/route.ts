@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    const data: OpenAIChatCompletionsProps = await req.json();
+    const data: OpenAIChatCompletionsProps = await req.json(); // validate with zod schema
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",

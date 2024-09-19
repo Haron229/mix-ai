@@ -1,11 +1,10 @@
 "use client";
 import { Avatar, Button } from "@nextui-org/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
 import {
-  appSlice,
+  reducePreviousSection,
   Sections,
   setCurrentSection,
 } from "@/lib/redux/models/app/app.slice";
@@ -15,7 +14,6 @@ import notificationIcon from "@/public/notification.svg";
 
 const DefaultHeader = ({ lable }: { lable: string }) => {
   const user = useAppSelector(userSlice.selectors.selectCurrentUser);
-  const prevSection = useAppSelector(appSlice.selectors.selectPreviousSection);
   const dispatch = useAppDispatch();
 
   return (
@@ -26,7 +24,7 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
           radius="full"
           size="sm"
           className="bg-[#232323]"
-          onClick={() => dispatch(setCurrentSection(prevSection))}
+          onClick={() => dispatch(reducePreviousSection())}
         >
           <ChevronLeftIcon className="scale-150" />
         </Button>
@@ -34,17 +32,18 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
       </div>
       <div className="flex justify-center items-center gap-3">
         <Image alt="notification icon" src={notificationIcon} />
-        <Link
-          href="/profile"
-          onClick={() => dispatch(setCurrentSection(Sections.Profile))}
-        >
-          <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
+        <div className="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-[#DD8631] via-[#DD3CA3] to-[#3968CD] flex justify-center items-center">
+          <Button
+            isIconOnly
+            radius="full"
+            onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+          >
             <Avatar
               src={user?.photo_url ?? "/profile.svg"}
               classNames={{ img: "object-none", base: "w-[44px] h-[44px]" }}
             />
-          </div>
-        </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

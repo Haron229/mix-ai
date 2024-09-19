@@ -13,8 +13,8 @@ import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 
 import Image from "next/image";
 
-import attachment from "@/public/file.png";
-import send from "@/public/send.png";
+import attachment from "@/public/file.svg";
+import send from "@/public/send.svg";
 
 const InputBar = forwardRef((_, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +58,7 @@ const InputBar = forwardRef((_, ref) => {
         classNames={{
           inputWrapper:
             "outline outline-1 outline-secondary bg-background group-data-[focus=true]:bg-background",
-          input: "placeholder:font-medium placeholder:text-[13px]",
+          input: "placeholder:font-medium placeholder:text-[13px] data-[has-end-content=true]:ps-4 data-[has-end-content=true]:pe-4",
         }}
         value={inputText}
         enterKeyHint="send"

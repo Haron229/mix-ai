@@ -1,6 +1,5 @@
 "use client";
 import { Button, Divider, Input, Avatar } from "@nextui-org/react";
-import Link from "next/link";
 import Image from "next/image";
 import {
   Sheet,
@@ -71,17 +70,15 @@ const ChatHeader = () => {
             </div>
             <SheetFooter
               className="w-full h-[98px] p-6 bg-[#0D0D0D]"
-              // onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+              onClick={() => dispatch(setCurrentSection(Sections.Profile))}
             >
-              <Link href="/profile">
-                <div className="flex justify-start items-center gap-3">
-                  <Avatar
-                    src={user?.photo_url ?? "/profile.svg"}
-                    classNames={{ img: "object-none", base: "w-12 h-12" }}
-                  />
-                  <p className="text-[17px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>
-                </div>
-              </Link>
+              <div className="flex justify-start items-center gap-3">
+                <Avatar
+                  src={user?.photo_url ?? "/profile.svg"}
+                  classNames={{ img: "object-none", base: "w-12 h-12" }}
+                />
+                <p className="text-[17px] font-semibold">{`${user?.first_name}  ${user?.last_name}`}</p>
+              </div>
               <Button isIconOnly radius="full" className="bg-transparent">
                 <DotsHorizontalIcon className="scale-150 text-[#878787]" />
               </Button>

@@ -15,10 +15,10 @@ import {
 import { ChevronUpIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
-import mid from "@/public/mid_btn.png";
-import burger from "@/public/burger.png";
-import house from "@/public/house.png";
-import soon from "@/public/soon.png";
+import mid from "@/public/footerMidBtn.svg";
+import burger from "@/public/footerBurger.svg";
+import house from "@/public/footerHouse.svg";
+import soon from "@/public/soonBage.svg";
 import InputBar from "@/components/Chat/InputBar";
 
 const MainFooter = () => {
@@ -34,7 +34,7 @@ const MainFooter = () => {
           <Button
             isIconOnly
             radius="full"
-            className="absolute h-[74px] w-[74px] z-10 bg-transparent"
+            className="absolute h-[74px] w-[74px] z-10 bg-[#101010] outline outline-1 outline-[#686868]"
           >
             <Image alt="" src={mid} />
           </Button>

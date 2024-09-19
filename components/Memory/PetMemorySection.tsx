@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Button,
   Card,
@@ -21,18 +20,19 @@ import create from "@/public/createIcon.svg";
 import upload from "@/public/uploadIcon.svg";
 
 import MemoryRecordContextMenu from "@/components/MemoryRecord/MemoryRecordContextMenu";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "@/lib/redux/shared/store";
-import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import {
+  resetRecord,
+  setRecordId,
+} from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
+import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { memoryRecordApi } from "@/lib/redux/models/memoryRecord/api";
+import { contextMenuSlice } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 
 const PetMemorySection = () => {
-  const router = useRouter();
-
-  const isOpen = useSelector((state: AppState) => state.contextMenu.isOpen);
-  const isPinned = useSelector(
-    (state: AppState) => state.memoryRecord.isPinned
-  );
-  const dispatch = useDispatch();
+  const isOpen = useAppSelector(contextMenuSlice.selectors.selectIsOpen);
+  const { data, isLoading } = memoryRecordApi.useGetMemoryRecordsQuery();
+  const dispatch = useAppDispatch();
 
   const [isAddBlockMenuOpen, setIsAddBlockMenuOpen] = useState(false);
 
@@ -54,11 +54,7 @@ const PetMemorySection = () => {
           </CardHeader>
           <CardBody>
             <p className="px-7 whitespace-pre-line text-[15px] text-[#5D5D5D] font-medium leading-7">
-              {`Майдан IT-специалист
-			  Проект MixAI является высоко ... 
-			  какая-то инфа
-			  какая-то инфа
-			  .......`}
+              Пока пусто
             </p>
           </CardBody>
         </Card>
@@ -67,7 +63,7 @@ const PetMemorySection = () => {
         >
           <p className="whitespace-pre-line">
             {`Создать новый блок данных
-			для памяти AI-питомца`}
+			      для памяти AI-питомца`}
           </p>
           <Popover
             placement="bottom-end"
@@ -97,7 +93,10 @@ const PetMemorySection = () => {
                   key="create"
                   endContent={<Image alt="" src={create} />}
                   classNames={{ title: "text-[13px] font-medium" }}
-                  onClick={() => router.push("/newMemoryRecord")}
+                  onClick={() => {
+                    dispatch(resetRecord());
+                    dispatch(setCurrentSection(Sections.MemoryRecord));
+                  }}
                 >
                   Создать
                 </ListboxItem>
@@ -112,46 +111,88 @@ const PetMemorySection = () => {
             </PopoverContent>
           </Popover>
         </div>
-        <Card
-          className={`${isOpen && "z-30"}`}
-          classNames={{
-            base: "bg-black flex-row shadow-none",
-            body: "bg-black flex-row items-center rounded-l-[10px] p-0",
-            footer:
-              "bg-black w-[120px] rounded-r-[10px] rounded-l-none justify-end",
-          }}
-        >
-          <CardBody>
-            <Button className="bg-transparent h-full w-full px-5 justify-start text-[#949494]">
-              {/* onPress={() => router.push(`/memoryBlock/${blockId}`)} */}
-              <div className="flex justify-center items-center h-full gap-4">
-                <Image alt="" src={emoji} />
-                <div className="flex flex-col justify-start">
-                  <p className="text-[10px] font-semibold text-start">
-                    Проект MixAi
-                  </p>
-                  <p className="text-[10px] font-medium">
-                    <span>Блок знаний </span>
-                    <span className="text-[#4C4C4C]">(2 дня назад)</span>
-                  </p>
-                </div>
-              </div>
-            </Button>
-          </CardBody>
-          <CardFooter>
-            {isPinned && (
-              <Button
-                isIconOnly
-                radius="full"
-                className="bg-transparent text-[#949494] w-fit"
-                onPress={() => dispatch(isPinnedChange())}
+        <div>
+          {/* add skeleton interface state */}
+          {!isLoading &&
+            data?.records?.map((memoryRecord) => (
+              <Card
+                key={memoryRecord.id}
+                className={`${isOpen && "z-30"}`}
+                classNames={{
+                  base: "bg-black flex-row shadow-none",
+                  body: "bg-black flex-row items-center rounded-l-[10px] p-0",
+                  footer:
+                    "bg-black w-[120px] rounded-r-[10px] rounded-l-none justify-end",
+                }}
               >
-                <DrawingPinFilledIcon className="scale-125" />
+                <CardBody>
+                  <Button
+                    className="bg-transparent h-full w-full px-5 justify-start text-[#949494]"
+                    onClick={() => {
+                      dispatch(setRecordId(memoryRecord.id));
+                      memoryRecordApi.endpoints.getMemoryRecord.initiate(
+                        memoryRecord.id
+                      );
+                      dispatch(setCurrentSection(Sections.MemoryRecord));
+                    }}
+                  >
+                    <div className="flex justify-center items-center h-full gap-4">
+                      <Image alt="" src={emoji} />
+                      <div className="flex flex-col justify-start">
+                        <p className="text-[10px] font-semibold text-start">
+                          {memoryRecord.title}
+                        </p>
+                        <p className="text-[10px] font-medium">
+                          <span>Блок знаний </span>
+                          {/* calculate updatedAt time */}
+                          <span className="text-[#4C4C4C]">(2 дня назад)</span>
+                        </p>
+                      </div>
+                    </div>
+                  </Button>
+                </CardBody>
+                <CardFooter>
+                  {memoryRecord.isPinned && (
+                    <DrawingPinFilledIcon className="scale-125 text-[#949494]" />
+                  )}
+                  <MemoryRecordContextMenu />
+                </CardFooter>
+              </Card>
+            ))}
+          {/* <Card
+            className={`${isOpen && "z-30"}`}
+            classNames={{
+              base: "bg-black flex-row shadow-none",
+              body: "bg-black flex-row items-center rounded-l-[10px] p-0",
+              footer:
+                "bg-black w-[120px] rounded-r-[10px] rounded-l-none justify-end",
+            }}
+          >
+            <CardBody>
+              <Button
+                className="bg-transparent h-full w-full px-5 justify-start text-[#949494]"
+                onClick={() => {}}
+              >
+                <div className="flex justify-center items-center h-full gap-4">
+                  <Image alt="" src={emoji} />
+                  <div className="flex flex-col justify-start">
+                    <p className="text-[10px] font-semibold text-start">
+                      Title
+                    </p>
+                    <p className="text-[10px] font-medium">
+                      <span>Блок знаний </span>
+                      <span className="text-[#4C4C4C]">(2 дня назад)</span>
+                    </p>
+                  </div>
+                </div>
               </Button>
-            )}
-            <MemoryRecordContextMenu />
-          </CardFooter>
-        </Card>
+            </CardBody>
+            <CardFooter>
+              <DrawingPinFilledIcon className="scale-125 text-[#949494]" />
+              <MemoryRecordContextMenu />
+            </CardFooter>
+          </Card> */}
+        </div>
       </div>
     </section>
   );

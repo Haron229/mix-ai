@@ -14,6 +14,7 @@ export const userSlice = createSlice({
   initialState,
   selectors: {
     selectCurrentUser: (state) => state.currentUser,
+    selectCurrentUserId: (state) => state.currentUser?.id ?? 0,
   },
   reducers: {
     setCurrentUser: (state, action: PayloadAction<ITelegramUser>) => {

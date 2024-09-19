@@ -5,8 +5,8 @@ import { useAppDispatch } from "@/lib/redux/shared/store";
 import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
 
 import pattern from "@/public/petcardpattern.svg";
-import pet from "@/public/pet.png";
-import cog from "@/public/cogIcon.svg";
+import pet from "@/public/pet.svg";
+import cog from "@/public/cogIconWhite.svg";
 
 const PetBanner = () => {
   const dispatch = useAppDispatch();

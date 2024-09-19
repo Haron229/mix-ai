@@ -12,18 +12,21 @@ import {
   DownloadIcon,
   DrawingPinIcon,
 } from "@radix-ui/react-icons";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "@/lib/redux/shared/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
+import {
+  contextMenuSlice,
+  isOpenChange,
+} from "@/lib/redux/models/conextMenu/contextMenu.slice";
+import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
 import Image from "next/image";
 
 import color from "@/public/colorIcon.svg";
 import _delete from "@/public/deleteIcon.svg";
-import { isOpenChange } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 
 const MemoryRecordContextMenu = () => {
-  const isOpen = useSelector((state: AppState) => state.contextMenu.isOpen);
-  const dispatch = useDispatch();
+  const isOpen = useAppSelector(contextMenuSlice.selectors.selectIsOpen);
+  const dispatch = useAppDispatch();
 
   return (
     <Popover
@@ -53,6 +56,7 @@ const MemoryRecordContextMenu = () => {
             key="pin"
             endContent={<DrawingPinIcon />}
             classNames={{ title: "text-[13px] font-medium" }}
+            onClick={() => dispatch(isPinnedChange())}
           >
             Закрепить
           </ListboxItem>
@@ -67,6 +71,7 @@ const MemoryRecordContextMenu = () => {
             key="color"
             endContent={<Image alt="" src={color} />}
             classNames={{ title: "text-[13px] font-medium" }}
+            // onClick={() => dispatch()} open color palette
           >
             Цвет
           </ListboxItem>

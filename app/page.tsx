@@ -3,24 +3,20 @@ import { useEffect, useMemo, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import { ITelegramUser } from "@/lib/types";
 
-import MainFooter from "@/components/Home/MainFooter";
-import MainPetSection from "@/components/Home/MainPetSection";
-import MainHeader from "@/components/Home/MainHeader";
-import DefaultHeader from "@/components/Home/DefaultHeader";
-import PetMemorySection from "@/components/Memory/PetMemorySection";
-import MemoryRecordSection from "@/components/MemoryRecord/MemoryRecordSection";
-import PetSettingsSection from "@/components/Memory/PetSettingsSection";
+import Main from "@/components/Home/Main";
+import Memory from "@/components/Memory/Memory";
+import MemoryRecord from "@/components/MemoryRecord/MemoryRecord";
 import Chat from "@/components/Chat/Chat";
+import Settings from "@/components/Settings/Settings";
 
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { setCurrentUser } from "@/lib/redux/models/user/user.slice";
-import { appSlice, Sections } from "@/lib/redux/models/app/app.slice";
-import { chatSlice } from "@/lib/redux/models/simpleChat/chat.slice";
-
-import Image from "next/image";
-
-import bg from "@/public/main_bg.png";
-import bg_gradient from "@/public/bg.png";
+import {
+  appSlice,
+  Sections,
+  setPlatform,
+} from "@/lib/redux/models/app/app.slice";
+import Profile from "@/components/Profile/Profile";
 
 export default function Home() {
   const [webApp, setWebApp] = useState<typeof WebApp | null>(null);
@@ -29,80 +25,25 @@ export default function Home() {
   const currentSection = useAppSelector(
     appSlice.selectors.selectCurrentSection
   );
-  const messages = useAppSelector(chatSlice.selectors.selectMessages);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getRenderSection = (section: Sections) => {
       switch (section) {
         case Sections.Main:
-          return (
-            <>
-              <div className="absolute">
-                <Image
-                  alt=""
-                  src={bg_gradient}
-                  className="absolute bottom-32"
-                />
-                <Image
-                  alt=""
-                  src={bg}
-                  className="relative object-cover mix-blend-multiply"
-                />
-              </div>
-              <MainHeader />
-              <MainPetSection />
-              <MainFooter />
-            </>
-          );
+          return <Main />;
         case Sections.Memory:
-          return (
-            <>
-              <DefaultHeader lable={"Память AI-питомца"} />
-              <PetMemorySection />
-              <MainFooter />
-            </>
-          );
-        case Sections.NewMemoryRecord:
-          return (
-            <>
-              <DefaultHeader lable="Без названия" />
-              <MemoryRecordSection />
-              <MainFooter />
-            </>
-          );
+          return <Memory />;
+        case Sections.MemoryRecord:
+          return <MemoryRecord />;
         case Sections.Chat:
           return <Chat />;
-        // case Sections.Profile:
-        //   return <></>;
+        case Sections.Profile:
+          return <Profile />;
         case Sections.Settings:
-          return (
-            <>
-              <DefaultHeader lable={"Настройка AI-питомца"} />
-              <PetSettingsSection />
-              <MainFooter />
-            </>
-          );
+          return <Settings />;
         default:
-          return (
-            <>
-              <div className="absolute">
-                <Image
-                  alt=""
-                  src={bg_gradient}
-                  className="absolute bottom-32"
-                />
-                <Image
-                  alt=""
-                  src={bg}
-                  className="relative object-cover mix-blend-multiply"
-                />
-              </div>
-              <MainHeader />
-              <MainPetSection />
-              <MainFooter />
-            </>
-          );
+          return <Main />;
       }
     };
 
@@ -110,12 +51,24 @@ export default function Home() {
   }, [currentSection]);
 
   useEffect(() => {
+    const getOS = (userAgent: string) => {
+      if (userAgent.includes("Windows")) return "Windows";
+      if (userAgent.includes("iPhone")) return "iOS";
+      if (userAgent.includes("Android")) return "Android";
+
+      return "Unknown";
+    };
+
     if (typeof window !== "undefined") {
       if (WebApp) {
         WebApp.ready();
         WebApp.expand();
         setWebApp(WebApp);
       }
+
+      const userAgent = navigator.userAgent;
+      
+      dispatch(setPlatform(getOS(userAgent)));
     }
   }, []);
 

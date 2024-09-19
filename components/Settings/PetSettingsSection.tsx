@@ -1,8 +1,9 @@
 import { Tabs, Tab, Input, Textarea, Badge } from "@nextui-org/react";
 import Image from "next/image";
 
-import soon from "@/public/soon.png";
-import petCard from "@/public/PetSettingsImage.png";
+import soon from "@/public/soonBage.svg";
+import pet from "@/public/pet.svg";
+import pattern from "@/public/petcardpattern.svg";
 
 const PetSettingsSection = () => {
   return (
@@ -33,9 +34,24 @@ const PetSettingsSection = () => {
                   input: "bg-transparent",
                 }}
               />
-              <div className="pb-1">
+              <div className="py-1">
                 <p className="pt-5 pb-1 pl-3">Внешний вид AI-питомца</p>
-                <Image alt="" src={petCard} />
+                <div className="bg-gradient-to-r from-[#424293] to-[#AA80C9] h-56 rounded-[32px] z-10">
+                  <div className="absolute w-96 h-56 -ml-1 -mt-1 bg-black rounded-[32px] -z-10" />
+                  <div className="absolute w-96 h-56 ml-1 mt-1 bg-[#BABABA]/25 rounded-[32px] -z-10" />
+                  <Image
+                    alt=""
+                    src={pattern}
+                    className="absolute h-56 w-96 rounded-[32px] object-cover object-[left_-80px] mix-blend-multiply"
+                  />
+                  <div className="flex h-full items-center px-6">
+                    <Image
+                      alt=""
+                      src={pet}
+                      className="relative w-[138px] h-[132px] z-10"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="">
                 <p className="pt-5 pb-1 pl-3">

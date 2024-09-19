@@ -24,6 +24,7 @@ model User {
   photo_url     String?
 
   petMemoryRecords PetMemoryRecord[]
+  assistants       AIAssistant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,4 +44,14 @@ model PetMemoryRecord {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model AIAssistant {
+  id           String @id
+  name         String
+  instructions String
+  model        String
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 }
