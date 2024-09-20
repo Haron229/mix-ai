@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { GetAllMemoryRecordsResponseSchema } from "@/lib/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (
+  req: NextRequest,
+  { params }: { params: { userId: string } }
+) => {
   try {
     const resRaw = await prisma.petMemoryRecord.findMany({
+      where: {
+        userId: parseInt(params.userId),
+      },
       select: {
         id: true,
         title: true,
@@ -18,7 +24,9 @@ export const GET = async () => {
     if (!resRaw)
       return new NextResponse("No memory records found", { status: 404 });
 
-    const res = GetAllMemoryRecordsResponseSchema.safeParse(resRaw);
+    const res = GetAllMemoryRecordsResponseSchema.safeParse({
+      records: resRaw,
+    });
 
     if (res.success) {
       return new Response(JSON.stringify(res.data), {
@@ -31,6 +39,6 @@ export const GET = async () => {
       );
     }
   } catch (error) {
-    return new NextResponse("Faild to get memory records", { status: 500 });
+    return new NextResponse("Faild to get memory records. Error: " + error, { status: 500 });
   }
 };

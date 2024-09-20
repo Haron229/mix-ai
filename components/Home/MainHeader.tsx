@@ -3,7 +3,8 @@ import Image from "next/image";
 import { Avatar, Button } from "@nextui-org/react";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import petIcon from "@/public/petIcon.svg";
 import notificationIcon from "@/public/notification.svg";
@@ -24,7 +25,7 @@ const MainHeader = () => {
           <Button
             isIconOnly
             radius="full"
-            onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+            onClick={() => dispatch(changeSection(Sections.Profile))}
           >
             <Avatar
               src={user?.photo_url ?? "/profile.svg"}

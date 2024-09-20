@@ -8,4 +8,5 @@ export const baseApi = createApi({
         : "https://themixreality.com/api",
   }),
   endpoints: () => ({}),
+  tagTypes: ["MemoryRecordsList", "MemoryRecord"],
 });

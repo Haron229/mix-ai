@@ -10,7 +10,7 @@ export interface SelectedMemoryRecordState {
 const initialState: SelectedMemoryRecordState = {
   record: {
     id: "",
-    title: "",
+    title: "Без названия",
     emoji: "",
     content: "",
     color: "000000",

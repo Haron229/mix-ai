@@ -9,8 +9,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import notificationIcon from "@/public/notification.svg";
 import burger from "@/public/allchatsbtn.svg";
@@ -70,7 +71,7 @@ const ChatHeader = () => {
             </div>
             <SheetFooter
               className="w-full h-[98px] p-6 bg-[#0D0D0D]"
-              onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+              onClick={() => dispatch(changeSection(Sections.Profile))}
             >
               <div className="flex justify-start items-center gap-3">
                 <Avatar
@@ -94,7 +95,7 @@ const ChatHeader = () => {
           radius="full"
           size="md"
           className="bg-[#232323]"
-          onClick={() => dispatch(setCurrentSection(Sections.Main))}
+          onClick={() => dispatch(changeSection(Sections.Main))}
         >
           <Cross1Icon />
         </Button>

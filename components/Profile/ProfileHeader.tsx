@@ -3,7 +3,8 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch } from "@/lib/redux/shared/store";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import notificationIcon from "@/public/notification.svg";
 import cog from "@/public/cogIcon.svg";
@@ -26,7 +27,7 @@ const ProfileHeader = () => {
             radius="full"
             size="md"
             className="bg-[#232323]"
-            onClick={() => dispatch(setCurrentSection(Sections.Main))}
+            onClick={() => dispatch(changeSection(Sections.Main))}
           >
             <Cross1Icon />
           </Button>

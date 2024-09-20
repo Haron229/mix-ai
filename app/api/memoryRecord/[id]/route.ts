@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { GetMemoryRecordResponseSchema } from "@/lib/types";
+import { PetMemoryRecordSchema } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
@@ -7,16 +7,18 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   try {
+    const id = params.id.replaceAll(" ", "");
+
     const resRaw = await prisma.petMemoryRecord.findFirst({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
     if (!resRaw)
       return new NextResponse("No memory record found", { status: 404 });
 
-    const res = GetMemoryRecordResponseSchema.safeParse(resRaw);
+    const res = PetMemoryRecordSchema.safeParse(resRaw);
 
     if (res.success) {
       return new NextResponse(JSON.stringify(res.data), {

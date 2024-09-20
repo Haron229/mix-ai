@@ -12,20 +12,18 @@ import {
   DownloadIcon,
   DrawingPinIcon,
 } from "@radix-ui/react-icons";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
-import {
-  contextMenuSlice,
-  isOpenChange,
-} from "@/lib/redux/models/conextMenu/contextMenu.slice";
+import { useAppDispatch } from "@/lib/redux/shared/store";
+import { isOpenChange } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
 
 import Image from "next/image";
 
 import color from "@/public/colorIcon.svg";
 import _delete from "@/public/deleteIcon.svg";
+import { useState } from "react";
 
-const MemoryRecordContextMenu = () => {
-  const isOpen = useAppSelector(contextMenuSlice.selectors.selectIsOpen);
+const MemoryRecordContextMenu = ({ recordId }: { recordId: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   return (
@@ -35,7 +33,10 @@ const MemoryRecordContextMenu = () => {
       offset={20}
       classNames={{ content: "bg-[#1C1C1C] text-[#949494]" }}
       isOpen={isOpen}
-      onOpenChange={() => dispatch(isOpenChange())}
+      onOpenChange={() => {
+        setIsOpen(!isOpen);
+        dispatch(isOpenChange(recordId));
+      }}
     >
       <PopoverTrigger>
         <Button
@@ -56,7 +57,11 @@ const MemoryRecordContextMenu = () => {
             key="pin"
             endContent={<DrawingPinIcon />}
             classNames={{ title: "text-[13px] font-medium" }}
-            onClick={() => dispatch(isPinnedChange())}
+            onClick={() => {
+              setIsOpen(!isOpen);
+              dispatch(isPinnedChange()); // need to save with memory id
+              dispatch(isOpenChange(""));
+            }}
           >
             Закрепить
           </ListboxItem>

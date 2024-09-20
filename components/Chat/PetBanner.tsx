@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
 import { useAppDispatch } from "@/lib/redux/shared/store";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import pattern from "@/public/petcardpattern.svg";
 import pet from "@/public/pet.svg";
@@ -30,7 +31,7 @@ const PetBanner = () => {
           isIconOnly
           radius="full"
           className="bg-black/50 backdrop-blur-[2px]"
-          onClick={() => dispatch(setCurrentSection(Sections.Settings))}
+          onClick={() => dispatch(changeSection(Sections.Settings))}
         >
           <Image alt="" src={cog} />
         </Button>

@@ -21,17 +21,20 @@ import upload from "@/public/uploadIcon.svg";
 
 import MemoryRecordContextMenu from "@/components/MemoryRecord/MemoryRecordContextMenu";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
-import {
-  resetRecord,
-  setRecordId,
-} from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { setRecordId } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
 import { memoryRecordApi } from "@/lib/redux/models/memoryRecord/api";
 import { contextMenuSlice } from "@/lib/redux/models/conextMenu/contextMenu.slice";
+import { userSlice } from "@/lib/redux/models/user/user.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 const PetMemorySection = () => {
+  const userId = useAppSelector(userSlice.selectors.selectCurrentUserId);
   const isOpen = useAppSelector(contextMenuSlice.selectors.selectIsOpen);
-  const { data, isLoading } = memoryRecordApi.useGetMemoryRecordsQuery();
+  const contextId = useAppSelector(contextMenuSlice.selectors.selectId);
+  const { data, isLoading } = memoryRecordApi.useGetMemoryRecordsQuery(userId, {
+    refetchOnMountOrArgChange: true,
+  });
   const dispatch = useAppDispatch();
 
   const [isAddBlockMenuOpen, setIsAddBlockMenuOpen] = useState(false);
@@ -93,10 +96,7 @@ const PetMemorySection = () => {
                   key="create"
                   endContent={<Image alt="" src={create} />}
                   classNames={{ title: "text-[13px] font-medium" }}
-                  onClick={() => {
-                    dispatch(resetRecord());
-                    dispatch(setCurrentSection(Sections.MemoryRecord));
-                  }}
+                  onClick={() => dispatch(changeSection(Sections.MemoryRecord))}
                 >
                   Создать
                 </ListboxItem>
@@ -111,13 +111,13 @@ const PetMemorySection = () => {
             </PopoverContent>
           </Popover>
         </div>
-        <div>
+        <div className="flex flex-col-reverse gap-4">
           {/* add skeleton interface state */}
           {!isLoading &&
             data?.records?.map((memoryRecord) => (
               <Card
                 key={memoryRecord.id}
-                className={`${isOpen && "z-30"}`}
+                className={`${isOpen && contextId === memoryRecord.id && "z-30"}`}
                 classNames={{
                   base: "bg-black flex-row shadow-none",
                   body: "bg-black flex-row items-center rounded-l-[10px] p-0",
@@ -133,7 +133,7 @@ const PetMemorySection = () => {
                       memoryRecordApi.endpoints.getMemoryRecord.initiate(
                         memoryRecord.id
                       );
-                      dispatch(setCurrentSection(Sections.MemoryRecord));
+                      dispatch(changeSection(Sections.MemoryRecord));
                     }}
                   >
                     <div className="flex justify-center items-center h-full gap-4">
@@ -155,43 +155,10 @@ const PetMemorySection = () => {
                   {memoryRecord.isPinned && (
                     <DrawingPinFilledIcon className="scale-125 text-[#949494]" />
                   )}
-                  <MemoryRecordContextMenu />
+                  <MemoryRecordContextMenu recordId={memoryRecord.id} />
                 </CardFooter>
               </Card>
             ))}
-          {/* <Card
-            className={`${isOpen && "z-30"}`}
-            classNames={{
-              base: "bg-black flex-row shadow-none",
-              body: "bg-black flex-row items-center rounded-l-[10px] p-0",
-              footer:
-                "bg-black w-[120px] rounded-r-[10px] rounded-l-none justify-end",
-            }}
-          >
-            <CardBody>
-              <Button
-                className="bg-transparent h-full w-full px-5 justify-start text-[#949494]"
-                onClick={() => {}}
-              >
-                <div className="flex justify-center items-center h-full gap-4">
-                  <Image alt="" src={emoji} />
-                  <div className="flex flex-col justify-start">
-                    <p className="text-[10px] font-semibold text-start">
-                      Title
-                    </p>
-                    <p className="text-[10px] font-medium">
-                      <span>Блок знаний </span>
-                      <span className="text-[#4C4C4C]">(2 дня назад)</span>
-                    </p>
-                  </div>
-                </div>
-              </Button>
-            </CardBody>
-            <CardFooter>
-              <DrawingPinFilledIcon className="scale-125 text-[#949494]" />
-              <MemoryRecordContextMenu />
-            </CardFooter>
-          </Card> */}
         </div>
       </div>
     </section>

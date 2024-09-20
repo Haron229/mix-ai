@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { Button } from "@nextui-org/react";
 import { useAppDispatch } from "@/lib/redux/shared/store";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import bg from "@/public/mainBgPattern.svg";
 import bg_gradient from "@/public/bg.png";
@@ -63,7 +64,7 @@ const MainPetSection = () => {
           <Image alt="" src={pet} className="scale-75" />
           <Button
             className="block w-[120px] h-[38px] px-0 rounded-full outline outline-1 outline-secondary bg-background self-end"
-            onClick={() => dispatch(setCurrentSection(Sections.Settings))}
+            onClick={() => dispatch(changeSection(Sections.Settings))}
           >
             <div className="flex items-center h-full">
               <Image
@@ -84,7 +85,7 @@ const MainPetSection = () => {
         <div className="grid grid-cols-2 gap-3">
           <Button
             className="flex justify-between items-center text-start bg-black/70 rounded-[16px] pr-3 pl-5 py-4 h-[68px] w-full"
-            onClick={() => dispatch(setCurrentSection(Sections.Memory))}
+            onClick={() => dispatch(changeSection(Sections.Memory))}
           >
             <p>
               Память

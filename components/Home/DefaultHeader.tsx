@@ -3,11 +3,11 @@ import { Avatar, Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { userSlice } from "@/lib/redux/models/user/user.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
 import {
-  reducePreviousSection,
-  Sections,
-  setCurrentSection,
-} from "@/lib/redux/models/app/app.slice";
+  changeSection,
+  previousSection,
+} from "@/lib/redux/models/app/changeSection";
 
 import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import notificationIcon from "@/public/notification.svg";
@@ -24,7 +24,7 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
           radius="full"
           size="sm"
           className="bg-[#232323]"
-          onClick={() => dispatch(reducePreviousSection())}
+          onClick={() => dispatch(previousSection())}
         >
           <ChevronLeftIcon className="scale-150" />
         </Button>
@@ -36,7 +36,7 @@ const DefaultHeader = ({ lable }: { lable: string }) => {
           <Button
             isIconOnly
             radius="full"
-            onClick={() => dispatch(setCurrentSection(Sections.Profile))}
+            onClick={() => dispatch(changeSection(Sections.Profile))}
           >
             <Avatar
               src={user?.photo_url ?? "/profile.svg"}

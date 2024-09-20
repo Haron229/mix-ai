@@ -7,6 +7,15 @@ export interface UserState {
 
 const initialState: UserState = {
   currentUser: null,
+  // currentUser: {
+  //   id: 469503095,
+  //   first_name: "Тест",
+  //   last_name: "Тестов",
+  //   username: "test",
+  //   language_code: "ru",
+  //   is_premium: false,
+  //   photo_url: "https://telegram.org/img/t_logo.png",
+  // }
 };
 
 export const userSlice = createSlice({

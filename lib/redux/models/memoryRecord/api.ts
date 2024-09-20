@@ -1,7 +1,6 @@
 import {
   GetAllMemoryRecordsResponse,
   GetMemoryRecordResponse,
-  PetMemoryRecordSchema,
   SaveMemoryRecordProps,
 } from "@/lib/types";
 import { baseApi } from "@/lib/redux/shared/api";
@@ -14,15 +13,16 @@ import {
 
 export const memoryRecordApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getMemoryRecords: builder.query<GetAllMemoryRecordsResponse, void>({
-      query: () => ({
-        url: "/memoryRecord/getAll",
+    getMemoryRecords: builder.query<GetAllMemoryRecordsResponse, number>({
+      query: (userId) => ({
+        url: `/memoryRecord/getAll/${userId}`,
         method: "GET",
       }),
+      providesTags: ["MemoryRecordsList"],
     }),
     getMemoryRecord: builder.query<GetMemoryRecordResponse, string>({
       query: (id) => ({
-        url: `/memoryRecord/get/${id}`,
+        url: `/memoryRecord/${id}`,
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         dispatch(resetRecord());
@@ -30,20 +30,26 @@ export const memoryRecordApi = baseApi.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
 
-          dispatch(setRecord(PetMemoryRecordSchema.parse(data)));
+          dispatch(setRecord(data));
           dispatch(setIsLoading(false));
         } catch (error) {
           dispatch(setError("Что-то пошло не так"));
           dispatch(setIsLoading(false));
         }
       },
+      providesTags: (result) => [{ type: "MemoryRecord", id: result?.id }],
     }),
-    saveMemoryRecord: builder.query({
+    saveMemoryRecord: builder.mutation({
       query: (data: SaveMemoryRecordProps) => ({
         url: "/memoryRecord/save",
         method: "POST",
         body: data,
       }),
+      // onQueryStarted
+      invalidatesTags: (result, error, arg) => [
+        { type: "MemoryRecord", id: arg.id },
+        "MemoryRecordsList",
+      ],
     }),
   }),
   overrideExisting: true,

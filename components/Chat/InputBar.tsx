@@ -9,7 +9,8 @@ import {
 } from "@/lib/redux/models/simpleChat/chat.slice";
 import { OpenAIChatCompletionsProps } from "@/lib/types";
 import { simpleChatApi } from "@/lib/redux/models/simpleChat/api";
-import { Sections, setCurrentSection } from "@/lib/redux/models/app/app.slice";
+import { Sections } from "@/lib/redux/models/app/app.slice";
+import { changeSection } from "@/lib/redux/models/app/changeSection";
 
 import Image from "next/image";
 
@@ -64,7 +65,7 @@ const InputBar = forwardRef((_, ref) => {
         enterKeyHint="send"
         onChange={(e) => dispatch(inputTextChange(e.target.value))}
         onFocus={() => {
-          dispatch(setCurrentSection(Sections.Chat));
+          dispatch(changeSection(Sections.Chat));
           dispatch(setIsInputFocused(true));
         }}
         onBlur={() => {

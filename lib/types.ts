@@ -58,7 +58,7 @@ export interface PetMemoryRecord {
   content: string;
   color: string;
   isPinned: boolean;
-  updatedAt?: number;
+  updatedAt?: Date;
 }
 
 export const PetMemoryRecordSchema = z.object({
@@ -68,7 +68,7 @@ export const PetMemoryRecordSchema = z.object({
   content: z.string(),
   color: z.string(),
   isPinned: z.boolean(),
-  updatedAt: z.number().optional(),
+  updatedAt: z.date(),
 });
 
 export interface SaveMemoryRecordProps {
@@ -89,7 +89,7 @@ export const GetAllMemoryRecordsResponseSchema = z.object({
       emoji: z.string(),
       color: z.string(),
       isPinned: z.boolean(),
-      updatedAt: z.number(),
+      updatedAt: z.date(),
     })
   ),
 });
@@ -98,9 +98,4 @@ export type GetAllMemoryRecordsResponse = z.infer<
   typeof GetAllMemoryRecordsResponseSchema
 >;
 
-export const GetMemoryRecordResponseSchema =
-  GetAllMemoryRecordsResponseSchema.shape.records.element;
-
-export type GetMemoryRecordResponse = z.infer<
-  typeof GetMemoryRecordResponseSchema
->;
+export type GetMemoryRecordResponse = z.infer<typeof PetMemoryRecordSchema>;

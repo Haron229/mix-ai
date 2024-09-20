@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
     });
 
     if (!res)
-      fetch("/api/user/add", {
+      fetch("http://localhost:3000/api/user/add", {
         method: "POST",
         body: JSON.stringify(data),
       }).then((result) =>
