@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/redux/shared/store";
 import { DrawingPinFilledIcon } from "@radix-ui/react-icons";
 
 const MemoryRecordTitle = () => {
+  const recordId = useAppSelector(memoryRecordSlice.selectors.selectId);
   const title = useAppSelector(memoryRecordSlice.selectors.selectTitle);
   const isPinned = useAppSelector(memoryRecordSlice.selectors.selectIsPinned);
   const dispatch = useAppDispatch();
@@ -35,12 +36,12 @@ const MemoryRecordTitle = () => {
             isIconOnly
             radius="full"
             className="bg-transparent text-[#949494] w-fit"
-            onPress={() => dispatch(isPinnedChange())}
+            onPress={() => dispatch(isPinnedChange())} // with id
           >
             <DrawingPinFilledIcon className="scale-125" />
           </Button>
         )}
-        <MemoryRecordContextMenu />
+        <MemoryRecordContextMenu recordId={recordId} />
       </div>
     </div>
   );
