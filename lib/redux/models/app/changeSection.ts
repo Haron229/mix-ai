@@ -42,5 +42,6 @@ export const previousSection =
       return;
     }
 
+    dispatch(resetRecord());
     dispatch(reducePreviousSection());
   };

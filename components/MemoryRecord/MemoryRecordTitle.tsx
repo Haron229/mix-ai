@@ -21,7 +21,8 @@ const MemoryRecordTitle = () => {
       <div className="flex items-center gap-4">
         <Button isIconOnly size="sm" radius="md" className="bg-[#232323]" />
         <Input
-          value={title ? title : "Без названия"}
+          placeholder="Без названия"
+          value={title}
           classNames={{
             inputWrapper: "bg-black group-data-[focus=true]:bg-black",
             input:

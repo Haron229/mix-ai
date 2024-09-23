@@ -7,11 +7,9 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   try {
-    const id = params.id.replaceAll(" ", "");
-
     const resRaw = await prisma.petMemoryRecord.findFirst({
       where: {
-        id: id,
+        id: params.id,
       },
     });
 
@@ -32,5 +30,24 @@ export const GET = async (
     }
   } catch (error) {
     return new NextResponse("Faild to get memory record", { status: 500 });
+  }
+};
+
+export const DELETE = async (
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  try {
+    const res = await prisma.petMemoryRecord.delete({
+      where: {
+        id: params.id,
+      },
+    });
+
+    if (!res) return new NextResponse("No memory record found", { status: 404 });
+    
+    return new NextResponse("Memory record deleted", { status: 200 });
+  } catch (error) {
+    return new NextResponse("Faild to delete memory record", { status: 500 });
   }
 };

@@ -12,18 +12,20 @@ import {
   DownloadIcon,
   DrawingPinIcon,
 } from "@radix-ui/react-icons";
+import { useState } from "react";
 import { useAppDispatch } from "@/lib/redux/shared/store";
 import { isOpenChange } from "@/lib/redux/models/conextMenu/contextMenu.slice";
 import { isPinnedChange } from "@/lib/redux/models/memoryRecord/memoryRecord.slice";
+import { memoryRecordApi } from "@/lib/redux/models/memoryRecord/api";
 
 import Image from "next/image";
 
 import color from "@/public/colorIcon.svg";
 import _delete from "@/public/deleteIcon.svg";
-import { useState } from "react";
 
 const MemoryRecordContextMenu = ({ recordId }: { recordId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteRecord] = memoryRecordApi.useDeleteMemoryRecordMutation();
   const dispatch = useAppDispatch();
 
   return (
@@ -87,6 +89,11 @@ const MemoryRecordContextMenu = ({ recordId }: { recordId: string }) => {
             classNames={{
               base: "text-[#AB0505]",
               title: "text-[13px] font-medium",
+            }}
+            onClick={() => {
+              setIsOpen(!isOpen);
+              deleteRecord(recordId);
+              dispatch(isOpenChange(""));
             }}
           >
             Удалить

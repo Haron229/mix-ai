@@ -5,7 +5,6 @@ import {
 } from "@/lib/types";
 import { baseApi } from "@/lib/redux/shared/api";
 import {
-  resetRecord,
   setError,
   setIsLoading,
   setRecord,
@@ -25,7 +24,6 @@ export const memoryRecordApi = baseApi.injectEndpoints({
         url: `/memoryRecord/${id}`,
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        dispatch(resetRecord());
         dispatch(setIsLoading(true));
         try {
           const { data } = await queryFulfilled;
@@ -37,7 +35,6 @@ export const memoryRecordApi = baseApi.injectEndpoints({
           dispatch(setIsLoading(false));
         }
       },
-      providesTags: (result) => [{ type: "MemoryRecord", id: result?.id }],
     }),
     saveMemoryRecord: builder.mutation({
       query: (data: SaveMemoryRecordProps) => ({
@@ -45,11 +42,14 @@ export const memoryRecordApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      // onQueryStarted
-      invalidatesTags: (result, error, arg) => [
-        { type: "MemoryRecord", id: arg.id },
-        "MemoryRecordsList",
-      ],
+      invalidatesTags: ["MemoryRecordsList"],
+    }),
+    deleteMemoryRecord: builder.mutation({
+      query: (id) => ({
+        url: `/memoryRecord/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MemoryRecordsList"],
     }),
   }),
   overrideExisting: true,

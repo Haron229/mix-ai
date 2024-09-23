@@ -130,9 +130,6 @@ const PetMemorySection = () => {
                     className="bg-transparent h-full w-full px-5 justify-start text-[#949494]"
                     onClick={() => {
                       dispatch(setRecordId(memoryRecord.id));
-                      memoryRecordApi.endpoints.getMemoryRecord.initiate(
-                        memoryRecord.id
-                      );
                       dispatch(changeSection(Sections.MemoryRecord));
                     }}
                   >
